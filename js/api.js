@@ -6,34 +6,35 @@ class API {
         this.song = song;
     }
 
-    consultApi() {
+    async consultApi() {
         const url = `https://api.lyrics.ovh/v1/${this.artist}/${this.song}`;
 
         UI.spinner();
 
-        fetch(url)
-            .then(response => response.json() )
-            .then(result => {
-                if(result.lyrics) {
-                    const {lyrics} = result;
-                    setTimeout(() => {
-                        document.querySelector(".spinner").remove();
-                        UI.divResult.textContent = lyrics;
-                        UI.headingSong.textContent = `Lyrics of ${this.song} from the artist ${this.artist}`;
-                        
-                    }, 2000);
-                    
-                } else {
-                    UI.divMessages.textContent = "This song does not exist or check with another name!";
-                    UI.divMessages.classList.add("error");
+        try {
+            const response = await fetch(url);
+            const result = await response.json();
+            const spinner = document.querySelector(".spinner");
+            spinner.remove();
 
-                    setTimeout(() => {
-                        UI.divMessages.textContent = "";
-                        UI.divMessages.classList.remove("error");
-                    }, 3000);
-                }
-                
-            });
+            const {lyrics} = result;
+
+            UI.divResult.textContent = lyrics;
+            UI.headingSong.textContent = `Lyrics of ${this.song} from the artist ${this.artist}`;
+
+        } catch (error) {
+
+            const spinner = document.querySelector(".spinner");
+            spinner.remove();
+            console.log(error);
+            UI.divMessages.textContent = error;
+            UI.divMessages.classList.add("error");
+
+            setTimeout(() => {
+                UI.divMessages.textContent = "";
+                UI.divMessages.classList.remove("error");
+            }, 3000);
+        }
     }
 }
 
