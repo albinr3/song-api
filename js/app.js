@@ -1,7 +1,6 @@
 import * as UI from "./interfaz.js";
 import API from "./api.js";
 
-document.addEventListener("mousemove", UI.clearHTML);
 UI.form.addEventListener("submit", searchSong);
 
 
@@ -17,6 +16,12 @@ function searchSong(e) {
             UI.divMessages.classList.remove("error");
         }, 3000);
     } else {
+
+        const spinnerHtml = document.getElementById('spinner');
+        //show spinner
+        if(!spinnerHtml) {
+            UI.spinner(); 
+        };
 
         //consult our API
         const query = new API(UI.artistInput.value, UI.songInput.value)

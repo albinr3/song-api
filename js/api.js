@@ -8,14 +8,17 @@ class API {
 
     async consultApi() {
         const url = `https://api.lyrics.ovh/v1/${this.artist}/${this.song}`;
-
-        UI.spinner();
-
+        
         try {
             const response = await fetch(url);
             const result = await response.json();
-            const spinner = document.querySelector(".spinner");
-            spinner.remove();
+          
+            // //when it found the lyrics it delete the spinner
+            const spinnerHtml = document.getElementById('spinner');
+            if(spinnerHtml) {
+                spinnerHtml.remove();
+            };
+            
 
             const {lyrics} = result;
 
@@ -24,8 +27,8 @@ class API {
 
         } catch (error) {
 
-            const spinner = document.querySelector(".spinner");
-            spinner.remove();
+            
+
             console.log(error);
             UI.divMessages.textContent = error;
             UI.divMessages.classList.add("error");

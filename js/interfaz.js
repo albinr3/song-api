@@ -6,9 +6,11 @@ export const divMessages = document.querySelector("#mensajes");
 export const divResult = document.querySelector("#resultado");
 export const headingSong = document.querySelector("#song-name");
 
+
 export function spinner() {
     const spinner = document.createElement("div");
-    spinner.classList.add("spinner");
+    spinner.classList.add('spinner');
+    spinner.setAttribute('id', 'spinner');
     spinner.innerHTML = `
     <div class="rect1"></div>
     <div class="rect2"></div>
