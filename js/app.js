@@ -17,7 +17,7 @@ function searchSong(e) {
         }, 3000);
     } else {
 
-        const spinnerHtml = document.getElementById('spinner');
+        const spinnerHtml = document.querySelector('.spinner');
         //show spinner
         if(!spinnerHtml) {
             UI.spinner(); 
